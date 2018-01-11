@@ -15,21 +15,21 @@ void *Start(void *arg);
 mpz_t dest[MAX_FACTORS]; // must be large enough to hold all the factors!
 mpz_t n;
 int l;
-char **value;
+const char *value;
 
 int main(int argc, char **argv)
 {
   int i;
 	pthread_t tid;
-	value[0] = (char*)argv[1];
+    value = (char*)argv[1];
 	if(argc != 2)
 	{
 			puts("Usage: ./pdec <number to be factored>");
 			return EXIT_SUCCESS;
 	}
-	for(i = 1; i <= argc; i++){
-			pthread_create(&tid, NULL, Start,(void*) &argv[i]);
-	}
+	//for(i = 1; i <= argc; i++){
+			pthread_create(&tid, NULL, Start,(void*) 1);
+	//}
 
   for(i=0; i < l; i++){
     		gmp_printf("%s%Zd", i?" * ":"", dest[i]);
