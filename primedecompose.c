@@ -3,7 +3,8 @@
 
 int decompose (mpz_t n){
 	int i = 0;
-  	mpz_t tmp, d, *o;
+  	mpz_t tmp, d;
+  	mpz_t o[1024];
     //variables
 
 	  mpz_init(tmp);

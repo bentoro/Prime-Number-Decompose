@@ -27,15 +27,15 @@ int main(int argc, char *argv[]){
 			return EXIT_SUCCESS;
 	}
 	for(i = 1; i <= argc; i++){
-	cout << argv[i] << endl;
+	//cout << argv[i] << endl;
 	    if(pthread_create(&tid[i], NULL, Start,(void*) argv[i]) != 0){
             cout << "Error making thread" << endl;
             break;
         }
 	}
-	//for(k = 1; k <= argc; k++){
-        //pthread_join(tid[k],NULL);
-    //}
+	for(k = 1; k <= argc; k++){
+        pthread_join(tid[k],NULL);
+    }
     /*for(i=0; i < l; i++){
         gmp_printf("%s%Zd", i?" * ":"", dest[i]);
     	mpz_clear(dest[i]);
