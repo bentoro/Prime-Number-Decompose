@@ -1,9 +1,9 @@
 #include "primedecompose.h"
+#include <iostream>
 
-int decompose (mpz_t n, mpz_t *o)
-{
+int decompose (mpz_t n){
 	int i = 0;
-  	mpz_t tmp, d;
+  	mpz_t tmp, d, *o;
     //variables
 
 	  mpz_init(tmp);
@@ -26,5 +26,11 @@ int decompose (mpz_t n, mpz_t *o)
     		mpz_set(o[i], d);
     		i++;
   	}
+  	int k;
+  	for(k = 0; k < i; k++){
+        gmp_printf("%s%Zd", k?" * ":"",o[k]);
+        mpz_clear(o[k]);
+    }
+    printf("\n");
   	return i;
 }
