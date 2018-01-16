@@ -1,13 +1,14 @@
 #include "primedecompose.h"
 #include <iostream>
 
-int decompose (mpz_t n){
+void decompose (mpz_t n){
+	FILE *fp;
 	int i = 0;
   	mpz_t tmp, d;
   	mpz_t o[1024];
     //variables
 
-	  mpz_init(tmp);
+	mpz_init(tmp);
     //initialize tmp and set value to 0
   	mpz_init(d);
     //initialize d and set value to 0
@@ -33,5 +34,4 @@ int decompose (mpz_t n){
         mpz_clear(o[k]);
     }
     printf("\n");
-  	return i;
 }
