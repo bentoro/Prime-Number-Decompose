@@ -6,7 +6,7 @@ void decompose (mpz_t n){
 	struct timeval stop, start;
 	gettimeofday(&start, NULL);
 	float end;
-	//FILE *fp;
+	FILE *fp;
 		int i = 0;
   	mpz_t tmp, d;
   	mpz_t o[1024];
@@ -29,15 +29,21 @@ void decompose (mpz_t n){
   	}
 		gettimeofday(&stop,NULL);
 		end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
+		fp = fopen("process.txt","w+");
 		pthread_mutex_lock (&lock);
 		printf("PID: %ld", (long)getpid());
+		fprintf(fp, "PID: %ld", (long)getpid());
 		printf("Time: %f",end);
 		printf("\n");
+		fprintf(fp, "\n");
   	int k;
   	for(k = 0; k < i; k++){
         gmp_printf("%s%Zd", k?" * ":"",o[k]);
+        gmp_fprintf(fp, "%s%Zd", k?" * ":"",o[k]);
         mpz_clear(o[k]);
     }
     printf("\n");
-		pthread_mutex_unlock (&lock);
+    fprintf(fp, "\n");
+    fclose(fp);
+	pthread_mutex_unlock (&lock);
 }
