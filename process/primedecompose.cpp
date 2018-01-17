@@ -28,6 +28,7 @@ void decompose (mpz_t n){
     		i++;
   	}
 		gettimeofday(&stop,NULL);
+		printf("PID: %ld", (long)getpid());
 		end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
 		pthread_mutex_lock (&lock);
 		printf("Time: %f",end);
