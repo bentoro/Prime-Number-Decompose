@@ -1,12 +1,12 @@
 #include "primedecompose.h"
-
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 void decompose (mpz_t n){
-	FILE *fp;
+
 	struct timeval stop, start;
 	gettimeofday(&start, NULL);
 	float end;
+	//FILE *fp;
 		int i = 0;
   	mpz_t tmp, d;
   	mpz_t o[1024];
