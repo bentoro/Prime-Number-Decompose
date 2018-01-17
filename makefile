@@ -1,2 +1,2 @@
-pdec: threads.c primedecompose.c
-	g++ -pthread -g -Wall -o pdec threads.c primedecompose.c -lgmp
+pdec: threads.cpp primedecompose.cpp
+	g++ -pthread -g -Wall -o pdec threads.cpp primedecompose.cpp -lgmp
