@@ -5,5 +5,5 @@
 //#include <time.h>
 #include <sys/time.h>
 
-void decompose(mpz_t n);
+int decompose(mpz_t n, mpz_t *o);
 #endif

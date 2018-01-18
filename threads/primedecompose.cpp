@@ -1,17 +1,9 @@
 #include "primedecompose.h"
-pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
-
-void decompose (mpz_t n){
-
-	struct timeval stop, start;
-	gettimeofday(&start, NULL);
-	float end;
-	FILE *fp;
-		int i = 0;
+ 	int decompose (mpz_t n, mpz_t *o){
+	int i = 0;
   	mpz_t tmp, d;
-  	mpz_t o[1024];
 
-		mpz_init(tmp);
+	mpz_init(tmp);
   	mpz_init(d);
 
   	while (mpz_cmp_si (n, 1)){
@@ -27,22 +19,6 @@ void decompose (mpz_t n){
     		mpz_set(o[i], d);
     		i++;
   	}
-		gettimeofday(&stop,NULL);
-		end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-		pthread_mutex_lock (&lock);
-		fp = fopen("threads.txt","w+");
-		printf("Time: %f",end);
-		fprintf(fp, "Time: %f", end);
-		printf("\n");
-		fprintf(fp,"\n");
-  	int k;
-  	for(k = 0; k < i; k++){
-        gmp_printf("%s%Zd", k?" * ":"",o[k]);
-        gmp_fprintf(fp,"%s%Zd", k?" * ":"",o[k]);
-        mpz_clear(o[k]);
-    }
-    printf("\n");
-    fprintf(fp,"\n");
-    fclose(fp);
-	pthread_mutex_unlock (&lock);
+
+		return i;
 }

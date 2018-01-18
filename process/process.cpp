@@ -33,7 +33,6 @@ int main(int argc, char *argv[]){
         } else {
           if(pid[i] == 0){
           Start(argv[i]);
-          //sleep(i);
           exit(0);
           }
         }
