@@ -32,7 +32,7 @@ int main(int argc, char *argv[]){
   int j;
   for(j = 1; j<=argc; j++){
     values[j] = argv[j];
-    cout << values[i] << endl;
+    cout << values[j] << endl;
   }
     FILE *fp;
     fp = fopen("threads.txt","w");
@@ -46,6 +46,7 @@ int main(int argc, char *argv[]){
 	for(k = 1; k < argc; k++){
         pthread_join(tid[k],NULL);
     }
+    fclose(fp);
   	return EXIT_SUCCESS;
 
     }
@@ -53,6 +54,8 @@ int main(int argc, char *argv[]){
 void* Start(void* fp){
     mpz_t dest[MAX_FACTORS];
     char *val = values[count];
+    FILE* f;
+    f = (FILE*)fp;
     mpz_t n;
     int i;
     struct timeval stop, start;
@@ -64,14 +67,14 @@ void* Start(void* fp){
   gettimeofday(&stop,NULL);
   end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
   pthread_mutex_lock (&lock);
-  fprintf(fp, "Time: %f", end);
-  fprintf(fp,"\n");
+  fprintf(f, "Time: %f", end);
+  fprintf(f,"\n");
   int k;
   for(k = 0; k < i; k++){
-      gmp_fprintf(fp,"%s%Zd", k?" * ":"",dest[k]);
+      gmp_fprintf(f,"%s%Zd", k?" * ":"",dest[k]);
       mpz_clear(dest[k]);
   }
-  fprintf(fp,"\n");
+  fprintf(f,"\n");
   pthread_mutex_unlock (&lock);
 
 	return NULL;
