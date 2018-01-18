@@ -2,10 +2,9 @@
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
 int decompose (mpz_t n, mpz_t *o){
-		int i = 0;
+	int i = 0;
   	mpz_t tmp, d;
-
-		mpz_init(tmp);
+	mpz_init(tmp);
   	mpz_init(d);
 
   	while (mpz_cmp_si (n, 1)){
@@ -21,5 +20,6 @@ int decompose (mpz_t n, mpz_t *o){
     		mpz_set(o[i], d);
     		i++;
   	}
-		return i;
+
+	return i;
 }
