@@ -15,11 +15,10 @@ using namespace std;
 #define MAX_FACTORS	1024
 #define MAX_THREADS 6
 
-void *Start(void *arg);
+void* Start(void *);
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
- // must be large enough to hold all the factors!
 char *values[1024];
 int count;
 
@@ -51,7 +50,7 @@ int main(int argc, char *argv[]){
 
     }
 
-void *Start(void *fp){
+void* Start(void* fp){
     mpz_t dest[MAX_FACTORS];
     char *val = values[count];
     mpz_t n;
@@ -60,7 +59,6 @@ void *Start(void *fp){
   	gettimeofday(&start, NULL);
   	float end;
 	mpz_init_set_str(n, val, 10);
-	//if the base is correct return 0 otherwise returns -1
 	i = decompose(n, dest);
 
   gettimeofday(&stop,NULL);
