@@ -1,3 +1,23 @@
+/*-----------------------------------------------------------------------------------------------
+-- FUNCTION:   decompose
+--
+-- DATE:       January 17 2018
+--
+-- DESIGNER:   Taken from your example on milliways
+--
+-- PROGRAMMER: Taken from your example on milliways
+--
+-- INTERFACE:  int decompose(mpz_t n, mpz_t *o)
+--
+-- PARAMATER:  mpz_t n - value to be decomposed
+--						 mpz_t o* - array holding the deomposed values
+--
+-- RETURNS:    returns number of values in the array
+--
+-- NOTES:      Decomposes the prime number and adds it to the array and returns
+--						 number of values in the array
+----------------------------------------------------------------------------------------------- */
+
 #include "primedecompose.h"
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 

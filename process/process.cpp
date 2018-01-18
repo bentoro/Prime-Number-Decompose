@@ -1,3 +1,23 @@
+/*-----------------------------------------------------------------------------------------------
+-- FUNCTION:   Main
+--
+-- DATE:       January 17 2018
+--
+-- DESIGNER:   Benedict Lo
+--
+-- PROGRAMMER: Benedict Lo
+--
+-- INTERFACE:  main()
+--
+-- PARAMETER:  int argc, char *argv[]
+--
+-- RETURNS:    int
+--
+-- Notes:      Creates processes per argument that is added and decomposes each
+               Prime number
+--
+----------------------------------------------------------------------------------------------- */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <gmp.h>
@@ -46,6 +66,24 @@ int main(int argc, char *argv[]){
     fclose(fp);
   	return 0;
     }
+    /*-----------------------------------------------------------------------------------------------
+    -- FUNCTION:   *Start
+    --
+    -- DATE:       January 17 2018
+    --
+    -- DESIGNER:   Benedict Lo
+    --
+    -- PROGRAMMER: Benedict Lo
+    --
+    -- INTERFACE:  main()
+    --
+    -- PARAMETER:  void*arg
+    --
+    -- RETURNS:    void
+    --
+    -- Notes:      Starts each prime decompostion and creates a new process per call
+    --
+    ----------------------------------------------------------------------------------------------- */
 
 void Start(char *arg, FILE *fp){
     mpz_t dest[MAX_FACTORS];

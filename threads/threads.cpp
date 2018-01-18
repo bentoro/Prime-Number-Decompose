@@ -1,3 +1,22 @@
+/*-----------------------------------------------------------------------------------------------
+-- FUNCTION:   Main
+--
+-- DATE:       January 17 2018
+--
+-- DESIGNER:   Benedict Lo
+--
+-- PROGRAMMER: Benedict Lo
+--
+-- INTERFACE:  main()
+--
+-- PARAMETER:  int argc, char *argv[]
+--
+-- RETURNS:    int
+--
+-- Notes:      Creates threads per argument that is added and decomposes each
+               Prime number
+--
+----------------------------------------------------------------------------------------------- */
 #include "primedecompose.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,7 +69,24 @@ int main(int argc, char *argv[]){
   	return EXIT_SUCCESS;
 
     }
-
+    /*-----------------------------------------------------------------------------------------------
+    -- FUNCTION:   *Start
+    --
+    -- DATE:       January 17 2018
+    --
+    -- DESIGNER:   Benedict Lo
+    --
+    -- PROGRAMMER: Benedict Lo
+    --
+    -- INTERFACE:  main()
+    --
+    -- PARAMETER:  void*arg
+    --
+    -- RETURNS:    void
+    --
+    -- Notes:      Starts each prime decompostion and creates a new thread per call
+    --
+    ----------------------------------------------------------------------------------------------- */
 void *Start(void *arg){
     mpz_t dest[MAX_FACTORS];
     ThreadInfo *Prime = (ThreadInfo *)arg;
