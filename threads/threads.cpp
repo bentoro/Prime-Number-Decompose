@@ -101,16 +101,23 @@ void *Start(void *arg){
 
     gettimeofday(&stop,NULL);
     end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-    pthread_mutex_lock (&lock);
+    //pthread_mutex_lock (&lock);
     fprintf(Prime->fd, "PID: %d", getpid());
-    fprintf(Prime->fd, "Time: %f", end);
+    printf( "PID: %d", getpid());
     fprintf(Prime->fd,"\n");
+    printf("\n");
+    fprintf(Prime->fd, "Time: %f", end);
+    printf( "Time: %f", end);
+    fprintf(Prime->fd,"\n");
+    printf("\n");
 
     for(k = 0; k < i; k++){
         gmp_fprintf(Prime->fd,"%s%Zd", k?" * ":"",dest[k]);
+        gmp_printf("%s%Zd", k?" * ":"",dest[k]);
         mpz_clear(dest[k]);
     }
     fprintf(Prime->fd,"\n");
-    pthread_mutex_unlock (&lock);
+    printf("\n");
+    //pthread_mutex_unlock (&lock);
 	return NULL;
 }
