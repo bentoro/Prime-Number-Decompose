@@ -101,7 +101,7 @@ void *Start(void *arg){
 
     gettimeofday(&stop,NULL);
     end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-    //pthread_mutex_lock (&lock);
+    pthread_mutex_lock (&lock);
     fprintf(Prime->fd, "PID: %d", getpid());
     printf( "PID: %d", getpid());
     fprintf(Prime->fd,"\n");
@@ -118,6 +118,6 @@ void *Start(void *arg){
     }
     fprintf(Prime->fd,"\n");
     printf("\n");
-    //pthread_mutex_unlock (&lock);
+    pthread_mutex_unlock (&lock);
 	return NULL;
 }
