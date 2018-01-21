@@ -51,12 +51,11 @@ int main(int argc, char *argv[]){
             exit(0);
         } else {
             if(pid == 0){
-                Start(argv[i],fp);
+                Start(argv[i]);
                 exit(0);
             }
         }
-	}
-
+	     }
   	for(k = 1; k <= argc; k++){
         wait(NULL);
     }
@@ -86,11 +85,12 @@ void Start(char *arg){
     struct timeval stop, start;
     gettimeofday(&start, NULL);
     float end;
-    int l;
+    int i, k;
+    FILE *fp;
     mpz_t n;
     mpz_init_set_str(n, arg, 10);
-    l = decompose(n, dest);
-    cout << "value: " << val << endl;
+    i = decompose(n, dest);
+    cout << "value: " << arg << endl;
     fp = fopen("process.txt","a+");
     fprintf(fp, "PID: %d", getpid());
     printf("PID: %d", getpid());
