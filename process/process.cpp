@@ -94,14 +94,9 @@ void Start(char *arg, FILE *fp){
     mpz_t n;
     mpz_init_set_str(n, arg, 10);
     l = decompose(n, dest);
-    gettimeofday(&stop,NULL);
-    end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
+
     fprintf(fp, "PID: %ld\n", (long)getpid());
     printf("PID: %ld\n", (long)getpid());
-    fprintf(fp,"Time: %f",end);
-    printf("Time: %f",end);
-    fprintf(fp, "\n");
-    printf("\n");
     int k;
     for(k = 0; k < l; k++){
         gmp_fprintf(fp, "%s%Zd", k?" * ":"",dest[k]);
@@ -109,4 +104,9 @@ void Start(char *arg, FILE *fp){
     }
     fprintf(fp,"\n");
     printf("\n");
+    gettimeofday(&stop,NULL);
+    end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
+    fprintf(fp,"Time: %f\n",end);
+    printf("Time: %f\n",end);
+
     }

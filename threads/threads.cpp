@@ -103,15 +103,11 @@ int main(int argc, char *argv[]){
 
     	mpz_init_set_str(n, Prime->val[Prime->a], 10);
     	i = decompose(n, dest);
-        gettimeofday(&stop,NULL);
-        end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
         pthread_mutex_lock (&lock);
         fprintf(Prime->fd, "PID: %d", getpid());
         printf("PID: %d", getpid());
         fprintf(Prime->fd,"\n");
         printf("\n");
-        fprintf(Prime->fd, "Time: %f\n", end);
-        printf("Time: %f\n", end);
         for(k = 0; k < i; k++){
             gmp_fprintf(Prime->fd,"%s%Zd", k?" * ":"",dest[k]);
             gmp_printf("%s%Zd", k?" * ":"",dest[k]);
@@ -119,6 +115,10 @@ int main(int argc, char *argv[]){
         }
         fprintf(Prime->fd,"\n");
         printf("\n");
+        gettimeofday(&stop,NULL);
+        end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
+        fprintf(Prime->fd, "Time: %f\n", end);
+        printf("Time: %f\n", end);
         pthread_mutex_unlock (&lock);
     	return NULL;
     }
