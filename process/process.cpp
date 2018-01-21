@@ -35,7 +35,7 @@ using namespace std;
 #define MAX_FACTORS	1024
 #define MAX_PROCESS 6
 
-void Start(char *arg, FILE *fp);
+void Start(char *arg);
 
 int main(int argc, char *argv[]){
     int i,k;
@@ -45,8 +45,6 @@ int main(int argc, char *argv[]){
 			puts("Usage: ./pdec <number to be factored>");
 			return EXIT_SUCCESS;
 	}
-    FILE *fp;
-    fp = fopen("process.txt","w");
 	for(i = 1; i <= argc; i++){
         if((pid = fork()) < 0){
             perror("Fork error");
@@ -62,8 +60,6 @@ int main(int argc, char *argv[]){
   	for(k = 1; k <= argc; k++){
         wait(NULL);
     }
-
-    fclose(fp);
   	return 0;
     }
     /*-----------------------------------------------------------------------------------------------
@@ -85,7 +81,7 @@ int main(int argc, char *argv[]){
     --
     ----------------------------------------------------------------------------------------------- */
 
-void Start(char *arg, FILE *fp){
+void Start(char *arg){
     mpz_t dest[MAX_FACTORS];
     struct timeval stop, start;
     gettimeofday(&start, NULL);
@@ -94,19 +90,21 @@ void Start(char *arg, FILE *fp){
     mpz_t n;
     mpz_init_set_str(n, arg, 10);
     l = decompose(n, dest);
-
-    fprintf(fp, "PID: %ld\n", (long)getpid());
-    printf("PID: %ld\n", (long)getpid());
-    int k;
-    for(k = 0; k < l; k++){
-        gmp_fprintf(fp, "%s%Zd", k?" * ":"",dest[k]);
+    cout << "value: " << val << endl;
+    fp = fopen("process.txt","a+");
+    fprintf(fp, "PID: %d", getpid());
+    printf("PID: %d", getpid());
+    fprintf(fp,"\n");
+    printf("\n");
+    for(k = 0; k < i; k++){
+        gmp_fprintf(fp,"%s%Zd", k?" * ":"",dest[k]);
+        gmp_printf("%s%Zd", k?" * ":"",dest[k]);
         mpz_clear(dest[k]);
     }
     fprintf(fp,"\n");
     printf("\n");
     gettimeofday(&stop,NULL);
     end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-    fprintf(fp,"Time: %f\n",end);
-    printf("Time: %f\n",end);
-
-    }
+    fprintf(fp, "Time: %f\n", end);
+    printf("Time: %f\n", end);
+}
