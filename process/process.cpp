@@ -39,7 +39,7 @@ void Start(char *arg, FILE *fp);
 
 int main(int argc, char *argv[]){
     int i,k;
-    pid_t pid[MAX_PROCESS];
+    pid_t pid;
 
 	if(argc != 6){
 			puts("Usage: ./pdec <number to be factored>");
@@ -48,11 +48,11 @@ int main(int argc, char *argv[]){
     FILE *fp;
     fp = fopen("process.txt","w");
 	for(i = 1; i <= argc; i++){
-        if((pid[i] = fork()) < 0){
+        if((pid = fork()) < 0){
             perror("Fork error");
             exit(0);
         } else {
-            if(pid[i] == 0){
+            if(pid == 0){
                 Start(argv[i],fp);
                 exit(0);
             }
@@ -94,20 +94,19 @@ void Start(char *arg, FILE *fp){
     mpz_t n;
     mpz_init_set_str(n, arg, 10);
     l = decompose(n, dest);
-
     gettimeofday(&stop,NULL);
     end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-    printf("PID: %ld", (long)getpid());
-    fprintf(fp, "PID: %ld", (long)getpid());
+    fprintf(fp, "PID: %ld\n", (long)getpid());
+    printf("PID: %ld\n", (long)getpid());
+    fprintf(fp,"Time: %f",end);
     printf("Time: %f",end);
-    printf("\n");
     fprintf(fp, "\n");
+    printf("\n");
     int k;
     for(k = 0; k < l; k++){
-        gmp_printf("%s%Zd", k?" * ":"",dest[k]);
         gmp_fprintf(fp, "%s%Zd", k?" * ":"",dest[k]);
         mpz_clear(dest[k]);
     }
+    fprintf(fp,"\n");
     printf("\n");
-    fprintf(fp, "\n");
     }

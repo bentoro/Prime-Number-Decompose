@@ -52,6 +52,11 @@ int main(int argc, char *argv[]){
 			puts("Usage: ./pdec <number to be factored>");
 			return EXIT_SUCCESS;
 	}
+
+  /*int j;
+  for(j = 1; j<=argc; j++){
+    values[j] = argv[j];
+  }*/
     FILE *fp;
     fp = fopen("threads.txt","w");
 	for(i = 1; i < argc; i++){
@@ -87,37 +92,33 @@ int main(int argc, char *argv[]){
     -- Notes:      Starts each prime decompostion and creates a new thread per call
     --
     ----------------------------------------------------------------------------------------------- */
-void *Start(void *arg){
-    mpz_t dest[MAX_FACTORS];
-    ThreadInfo *Prime = (ThreadInfo *)arg;
-    mpz_t n;
-    int i, k;
-    struct timeval stop, start;
-  	gettimeofday(&start, NULL);
-  	float end;
+    void *Start(void *arg){
+        mpz_t dest[MAX_FACTORS];
+        ThreadInfo *Prime = (ThreadInfo *)arg;
+        mpz_t n;
+        int i, k;
+        struct timeval stop, start;
+      	gettimeofday(&start, NULL);
+      	float end;
 
-	mpz_init_set_str(n, Prime->val[Prime->a], 10);
-	i = decompose(n, dest);
-
-    gettimeofday(&stop,NULL);
-    end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
-    pthread_mutex_lock (&lock);
-    fprintf(Prime->fd, "PID: %d", getpid());
-    printf( "PID: %d", getpid());
-    fprintf(Prime->fd,"\n");
-    printf("\n");
-    fprintf(Prime->fd, "Time: %f", end);
-    printf( "Time: %f", end);
-    fprintf(Prime->fd,"\n");
-    printf("\n");
-
-    for(k = 0; k < i; k++){
-        gmp_fprintf(Prime->fd,"%s%Zd", k?" * ":"",dest[k]);
-        gmp_printf("%s%Zd", k?" * ":"",dest[k]);
-        mpz_clear(dest[k]);
+    	mpz_init_set_str(n, Prime->val[Prime->a], 10);
+    	i = decompose(n, dest);
+        gettimeofday(&stop,NULL);
+        end = ((stop.tv_sec*1e6 + stop.tv_usec) - (start.tv_sec*1e6 + start.tv_usec));
+        pthread_mutex_lock (&lock);
+        fprintf(Prime->fd, "PID: %d", getpid());
+        printf("PID: %d", getpid());
+        fprintf(Prime->fd,"\n");
+        printf("\n");
+        fprintf(Prime->fd, "Time: %f\n", end);
+        printf("Time: %f\n", end);
+        for(k = 0; k < i; k++){
+            gmp_fprintf(Prime->fd,"%s%Zd", k?" * ":"",dest[k]);
+            gmp_printf("%s%Zd", k?" * ":"",dest[k]);
+            mpz_clear(dest[k]);
+        }
+        fprintf(Prime->fd,"\n");
+        printf("\n");
+        pthread_mutex_unlock (&lock);
+    	return NULL;
     }
-    fprintf(Prime->fd,"\n");
-    printf("\n");
-    pthread_mutex_unlock (&lock);
-	return NULL;
-}
