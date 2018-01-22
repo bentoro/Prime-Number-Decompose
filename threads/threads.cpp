@@ -38,37 +38,29 @@ void *Start(void *arg);
 
 pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;
 
-/*typedef struct{
-    FILE* fd;
-    int a;
-    char **val;
-}ThreadInfo;*/
-
 int main(int argc, char *argv[]){
+    struct timeval sp, st;
     int i,k;
     pthread_t tid[MAX_THREADS];
-    //ThreadInfo *PrimeInfo = (ThreadInfo*)malloc(sizeof(ThreadInfo));
     if(argc != 6){
 			puts("Usage: ./pdec <number to be factored>");
 			return EXIT_SUCCESS;
 	}
 
-  /*int j;
-  for(j = 1; j<=argc; j++){
-    values[j] = argv[j];
-  }*/
+  gettimeofday(&st, NULL);
 	for(i = 1; i < argc; i++){
-        /*PrimeInfo->a = i;
-        PrimeInfo->fd = fp;
-        PrimeInfo->val = argv;*/
 	    if(pthread_create(&tid[i], NULL, Start,(void*) argv[i]) != 0){
             cout << "Error making thread" << endl;
             break;
         }
 	}
+  float end;
 	for(k = 1; k < argc; k++){
         pthread_join(tid[k],NULL);
     }
+    gettimeofday(&sp, NULL);
+    end = ((sp.tv_sec) - (st.tv_sec));
+    cout << end << endl;
   	return EXIT_SUCCESS;
 
     }
@@ -90,9 +82,10 @@ int main(int argc, char *argv[]){
     -- Notes:      Starts each prime decompostion and creates a new thread per call
     --
     ----------------------------------------------------------------------------------------------- */
+
+
     void *Start(void *arg){
         mpz_t dest[MAX_FACTORS];
-        //ThreadInfo *Prime = (ThreadInfo *)arg;
         mpz_t n;
         int i, k;
         struct timeval stop, start;
@@ -105,7 +98,6 @@ int main(int argc, char *argv[]){
     	mpz_init_set_str(n, val, 10);
     	i = decompose(n, dest);
         pthread_mutex_lock (&lock);
-        cout << "value: " << val << endl;
         fp = fopen("threads.txt","a+");
         fprintf(fp, "PID: %d", getpid());
         printf("PID: %d", getpid());

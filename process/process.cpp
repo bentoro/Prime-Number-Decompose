@@ -38,6 +38,7 @@ using namespace std;
 void Start(char *arg);
 
 int main(int argc, char *argv[]){
+    struct timeval sp, st;
     int i,k;
     pid_t pid;
 
@@ -45,6 +46,7 @@ int main(int argc, char *argv[]){
 			puts("Usage: ./pdec <number to be factored>");
 			return EXIT_SUCCESS;
 	}
+  gettimeofday(&st, NULL);
 	for(i = 1; i <= argc; i++){
         if((pid = fork()) < 0){
             perror("Fork error");
@@ -56,9 +58,13 @@ int main(int argc, char *argv[]){
             }
         }
 	     }
+       long end;
   	for(k = 1; k <= argc; k++){
         wait(NULL);
     }
+    gettimeofday(&sp, NULL);
+    end = ((sp.tv_sec) - (st.tv_sec));
+    cout << end << endl;
   	return 0;
     }
     /*-----------------------------------------------------------------------------------------------
